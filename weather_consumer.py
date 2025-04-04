@@ -6,18 +6,18 @@ import os
 from dotenv import load_dotenv
 from datetime import datetime
 
-# Configure logging
+# Cấu hình logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger('weather_consumer')
 
-# Load environment variables
+# Tải biến môi trường
 load_dotenv()
 
 def process_weather_data():
-    # Kafka consumer configuration
+    # Cấu hình Kafka consumer
     consumer_config = {
         'bootstrap.servers': os.getenv('KAFKA_BOOTSTRAP_SERVERS', 'localhost:9092'),
         'group.id': 'weather_consumer_group',
@@ -38,7 +38,7 @@ def process_weather_data():
         conn = psycopg2.connect(**db_config)
         cursor = conn.cursor()
         
-        logger.info("Connected to PostgreSQL")
+        logger.info("Kết nối thành công đến PostgreSQL")
         
         while True:
             msg = consumer.poll(1.0)
@@ -48,9 +48,9 @@ def process_weather_data():
             
             if msg.error():
                 if msg.error().code() == KafkaException._PARTITION_EOF:
-                    logger.info(f"Reached end of partition {msg.partition()}")
+                    logger.info(f"Đã đọc hết dữ liệu trong phân vùng {msg.partition()}")
                 else:
-                    logger.error(f"Error: {msg.error()}")
+                    logger.error(f"Lỗi: {msg.error()}")
                 continue
             
             try:
@@ -91,24 +91,24 @@ def process_weather_data():
                 
                 cursor.execute(query, values)
                 conn.commit()
-                logger.info(f"Inserted weather data for {city} at {timestamp}")
+                logger.info(f"Đã lưu dữ liệu thời tiết cho {city} lúc {timestamp}")
                 
             except json.JSONDecodeError as e:
-                logger.error(f"Error decoding JSON: {e}")
+                logger.error(f"Lỗi giải mã JSON: {e}")
             except psycopg2.Error as e:
-                logger.error(f"Database error: {e}")
+                logger.error(f"Lỗi cơ sở dữ liệu: {e}")
                 conn.rollback()
             except Exception as e:
-                logger.error(f"Unexpected error: {e}")
+                logger.error(f"Lỗi không mong đợi: {e}")
         
     except KeyboardInterrupt:
-        logger.info("Consumer shutting down")
+        logger.info("Dừng consumer")
     finally:
         consumer.close()
         if 'conn' in locals() and conn:
             cursor.close()
             conn.close()
-            logger.info("PostgreSQL connection closed")
+            logger.info("Đã đóng kết nối PostgreSQL")
 
 if __name__ == "__main__":
     process_weather_data()
