@@ -29,7 +29,7 @@ This pipeline collects weather data from the OpenWeatherMap API for Vietnamese c
 ### Requirements
 
 - Docker Desktop
-- OpenWeatherMap account for API key (One Call API 3.0 in this project)
+- [OpenWeatherMap](https://openweathermap.org/api) account for API key (One Call API 3.0 in this project) 
 - Power BI Desktop (for dashboard development)
 
 ### Configuration
@@ -71,7 +71,7 @@ Weather data from the OpenWeatherMap API is transformed into an appropriate form
 
 ---
 
-## Data Visualization with Power BI
+## 📊 Data Visualization with Power BI
 
 The project includes a Power BI dashboard for real-time weather monitoring with the following features:
 
@@ -84,3 +84,5 @@ The project includes a Power BI dashboard for real-time weather monitoring with 
 - Visibility in kilometers
 - Sunrise and sunset times
 - Weather condition icons and descriptions
+
+![Real-Time Weather Dashboard](https://github.com/ducduong263/RealTime_Weather_ETL_Pipeline/blob/main/Img/Dashboard/HCM.PNG)
