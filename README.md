@@ -16,11 +16,11 @@ This pipeline collects weather data from the OpenWeatherMap API for Vietnamese c
 
 ## Key Components
 
-**weather_producer.py**: Fetches data from OpenWeatherMap API and sends it to Kafka
-**weather_consumer.py**: Receives data from Kafka and stores it in PostgreSQL
-**PostgreSQL**: Stores the processed weather data
-**Kafka & Zookeeper**: Message queue system for real-time data processing
-**Power BI**: Creates interactive dashboards for weather data visualization
+- **weather_producer.py**: Fetches data from OpenWeatherMap API and sends it to Kafka
+- **weather_consumer.py**: Receives data from Kafka and stores it in PostgreSQL
+- **PostgreSQL**: Stores the processed weather data
+- **Kafka & Zookeeper**: Message queue system for real-time data processing
+- **Power BI**: Creates interactive dashboards for weather data visualization
 
 ---
 
