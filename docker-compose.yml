@@ -11,6 +11,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 3
+    restart: unless-stopped
 
   kafka:
     image: confluentinc/cp-kafka:latest
@@ -27,11 +28,14 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_LOG_RETENTION_HOURS: 24
     healthcheck:
       test: ["CMD", "kafka-topics", "--bootstrap-server", "localhost:9092", "--list"]
       interval: 10s
       timeout: 10s
       retries: 3
+    restart: unless-stopped
 
   postgres:
     image: postgres:14
@@ -50,6 +54,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
   weather-producer:
     container_name: producer
@@ -60,7 +65,7 @@ services:
       kafka:
         condition: service_healthy
     volumes:
-      - .:/app
+      - ./:/app
     command: python weather_producer.py
     env_file:
       - .env
@@ -77,7 +82,7 @@ services:
       postgres:
         condition: service_healthy
     volumes:
-      - .:/app
+      - ./:/app
     command: python weather_consumer.py
     env_file:
       - .env
