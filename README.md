@@ -12,13 +12,17 @@ This pipeline collects weather data from the OpenWeatherMap API for Vietnamese c
 3. **Consumer** receives and processes the data, then stores it in **PostgreSQL**
 4. **Power BI** connects to the PostgreSQL database to create interactive dashboards
 
+---
+
 ## Key Components
 
-- **weather_producer.py**: Fetches data from OpenWeatherMap API and sends it to Kafka
-- **weather_consumer.py**: Receives data from Kafka and stores it in PostgreSQL
-- **PostgreSQL**: Stores the processed weather data
-- **Kafka & Zookeeper**: Message queue system for real-time data processing
-- **Power BI**: Creates interactive dashboards for weather data visualization
+**weather_producer.py**: Fetches data from OpenWeatherMap API and sends it to Kafka
+**weather_consumer.py**: Receives data from Kafka and stores it in PostgreSQL
+**PostgreSQL**: Stores the processed weather data
+**Kafka & Zookeeper**: Message queue system for real-time data processing
+**Power BI**: Creates interactive dashboards for weather data visualization
+
+---
 
 ## Installation and Usage
 
@@ -44,6 +48,7 @@ docker-compose up -d
 ```bash
 docker-compose down
 ```
+---
 
 ## Technical Details
 
@@ -63,6 +68,8 @@ The system uses Kafka as a reliable message broker, enabling real-time data proc
 ### Data Formatting
 
 Weather data from the OpenWeatherMap API is transformed into an appropriate format before being stored in PostgreSQL, with timezone conversions to display in Vietnam time (UTC+7).
+
+---
 
 ## Data Visualization with Power BI
 
