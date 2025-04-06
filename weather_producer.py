@@ -15,7 +15,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger('weather_producer')
 
-# Tải biến môi trường
 load_dotenv()
 
 def delivery_report(err, msg):
@@ -25,7 +24,6 @@ def delivery_report(err, msg):
         logger.info(f"Tin nhắn đã được gửi đến {msg.topic()} [{msg.partition()}] tại offset {msg.offset()}")
 
 def fetch_and_send_weather_data():
-    """Lấy dữ liệu từ API OpenWeatherMap và gửi đến Kafka"""
     producer_config = {
         'bootstrap.servers': os.getenv('KAFKA_BOOTSTRAP_SERVERS', 'localhost:9092'),
         'client.id': 'weather_producer'
@@ -33,9 +31,9 @@ def fetch_and_send_weather_data():
     producer = Producer(producer_config)
     
     coordinates = [
-        {"name": "Hồ Chí Minh", "lon": 106.666672, "lat": 10.75},
-        {"name": "Hà Nội", "lon": 105.841171, "lat": 21.0245},
-        {"name": "Đà Nẵng", "lon": 108.220833, "lat": 16.06778}
+        {"name": "Ho Chi Minh", "lon": 106.666672, "lat": 10.75},
+        {"name": "Ha Noi", "lon": 105.841171, "lat": 21.0245},
+        {"name": "Da Nang", "lon": 108.220833, "lat": 16.06778}
     ]
     part = "minutely,hourly,daily"
     api_key = os.getenv('OPENWEATHERMAP_API_KEY')
