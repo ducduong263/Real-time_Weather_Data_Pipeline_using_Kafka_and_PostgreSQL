@@ -7,13 +7,16 @@ CREATE TABLE IF NOT EXISTS weather (
     humidity INTEGER NOT NULL,
     pressure INTEGER,
     wind_speed FLOAT,
-    wind_deg INTEGER,
+    uv FLOAT,
+    visibility INTEGER,
     clouds INTEGER,
+    precipitation FLOAT,  
     weather_condition VARCHAR(100),
     weather_description VARCHAR(100),
+    weather_icon VARCHAR(20),
     sunrise TIMESTAMP WITHOUT TIME ZONE,
     sunset TIMESTAMP WITHOUT TIME ZONE,
-    UNIQUE (city, timestamp)  -- Ràng buộc UNIQUE để tránh dữ liệu trùng lặp
+    UNIQUE (city, timestamp)
 );
 
 -- Tạo index để tăng tốc truy vấn

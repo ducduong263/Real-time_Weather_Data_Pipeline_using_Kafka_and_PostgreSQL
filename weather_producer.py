@@ -37,7 +37,6 @@ def fetch_and_send_weather_data():
         {"name": "Hà Nội", "lon": 105.841171, "lat": 21.0245},
         {"name": "Đà Nẵng", "lon": 108.220833, "lat": 16.06778}
     ]
-    
     part = "minutely,hourly,daily"
     api_key = os.getenv('OPENWEATHERMAP_API_KEY')
     

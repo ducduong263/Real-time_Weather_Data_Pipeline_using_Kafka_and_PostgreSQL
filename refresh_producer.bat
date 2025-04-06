@@ -1,1 +1,1 @@
-docker exec realtime_weather_etl_pipeline-weather-producer-1 python -c "from weather_producer import fetch_and_send_weather_data; fetch_and_send_weather_data()"
+docker exec producer python -c "from weather_producer import fetch_and_send_weather_data; fetch_and_send_weather_data()"

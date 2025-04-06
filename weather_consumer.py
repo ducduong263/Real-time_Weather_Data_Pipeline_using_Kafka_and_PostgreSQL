@@ -29,7 +29,7 @@ def process_weather_data():
         consumer.subscribe(['weather-data-topic'])
         
         db_config = {
-            'host': os.getenv('DB_HOST', 'localhost'),
+            'host': os.getenv('DB_HOST', 'postgres'),  # Sử dụng tên service 'postgres' thay vì 'localhost'
             'database': os.getenv('DB_NAME', 'weather_data'),
             'user': os.getenv('DB_USER', 'postgres'),
             'password': os.getenv('DB_PASSWORD', 'postgres')
@@ -65,11 +65,21 @@ def process_weather_data():
                 humidity = current['humidity']
                 pressure = current.get('pressure')
                 wind_speed = current.get('wind_speed')
-                wind_deg = current.get('wind_deg')
+                uv = current.get('uvi')  
                 clouds = current.get('clouds')
+                visibility = current.get('visibility')
                 
-                weather_condition = current['weather'][0]['main'] if 'weather' in current and len(current['weather']) > 0 else None
-                weather_description = current['weather'][0]['description'] if 'weather' in current and len(current['weather']) > 0 else None
+                # Xử lý dữ liệu lượng mưa
+                precipitation = current.get('rain', {}).get('1h', 0) if 'rain' in current else 0
+            
+                weather_condition = None
+                weather_description = None
+                weather_icon = None
+                
+                if 'weather' in current and len(current['weather']) > 0:
+                    weather_condition = current['weather'][0]['main']
+                    weather_description = current['weather'][0]['description']
+                    weather_icon = current['weather'][0]['icon']
                 
                 sunrise = datetime.strptime(current['sunrise'], '%Y-%m-%d %H:%M:%S') if 'sunrise' in current else None
                 sunset = datetime.strptime(current['sunset'], '%Y-%m-%d %H:%M:%S') if 'sunset' in current else None
@@ -77,16 +87,16 @@ def process_weather_data():
                 query = """
                 INSERT INTO weather (
                     city, timestamp, temperature, feels_like, humidity, pressure,
-                    wind_speed, wind_deg, clouds, weather_condition, weather_description,
-                    sunrise, sunset
-                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    wind_speed, uv, clouds, weather_condition, weather_description,
+                    sunrise, sunset, visibility, precipitation, weather_icon
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 ON CONFLICT (city, timestamp) DO NOTHING
                 """
                 
                 values = (
                     city, timestamp, temperature, feels_like, humidity, pressure,
-                    wind_speed, wind_deg, clouds, weather_condition, weather_description,
-                    sunrise, sunset
+                    wind_speed, uv, clouds, weather_condition, weather_description,
+                    sunrise, sunset, visibility, precipitation, weather_icon
                 )
                 
                 cursor.execute(query, values)
