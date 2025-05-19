@@ -1,16 +1,19 @@
-# 🌦️RealTime Weather ETL Pipeline
+# 🌦️ Real-Time Weather Data Pipeline
 
-A real-time ETL (Extract-Transform-Load) system using Kafka, Python, PostgreSQL, and Power BI to collect, process, store, and visualize weather data from the OpenWeatherMap API.
+A real-time **data pipeline** system using Kafka, Python, PostgreSQL, and Power BI to collect, stream, store, and visualize weather data from the OpenWeatherMap API.
 
-## System Overview
+## 📌 Project Summary
 
-This pipeline collects weather data from the OpenWeatherMap API for Vietnamese cities (Hanoi, Ho Chi Minh City, Da Nang), processes it, stores it in PostgreSQL, and visualizes it through interactive Power BI dashboards for real-time weather monitoring.
+This system collects weather data from the OpenWeatherMap API for Vietnamese cities (Hanoi, Ho Chi Minh City, Da Nang), streams it via Kafka, processes and stores it in PostgreSQL, and finally visualizes it through an interactive Power BI dashboard for near real-time weather monitoring.
 
-### Data Flow:
-1. **Producer** calls the OpenWeatherMap API to periodically fetch weather data
-2. Data is pushed to **Kafka** for processing using the pub/sub model
-3. **Consumer** receives and processes the data, then stores it in **PostgreSQL**
-4. **Power BI** connects to the PostgreSQL database to create interactive dashboards
+---
+
+## 🔁 Data Flow
+
+1. **Producer** calls the OpenWeatherMap API to periodically fetch weather data.
+2. Weather data is streamed to **Kafka** using the pub/sub model.
+3. **Consumer** subscribes to Kafka topic, processes messages, and stores data in **PostgreSQL**.
+4. **Power BI** connects to PostgreSQL and visualizes data in real time.
 
 ---
 
@@ -85,4 +88,4 @@ The project includes a Power BI dashboard for real-time weather monitoring with 
 - Sunrise and sunset times
 - Weather condition icons and descriptions
 
-![Real-Time Weather Dashboard](https://github.com/ducduong263/RealTime_Weather_ETL_Pipeline/blob/main/Img/Dashboard/HCM.PNG)
+![Real-Time Weather Dashboard](https://github.com/ducduong263/Real-time_Weather_Data_Pipeline_using_Kafka_and_PostgreSQL/blob/main/Img/Dashboard/HCM.PNG)
